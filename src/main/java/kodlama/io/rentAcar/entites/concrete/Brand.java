@@ -1,6 +1,6 @@
 package kodlama.io.rentAcar.entites.concrete;
 import jakarta.persistence.*;
-
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +21,6 @@ public class Brand {
 	@Column(name="name")
 	private String name;
 
-
-
-
+	@OneToMany(mappedBy = "brand")
+	private List<Model> models;
 }

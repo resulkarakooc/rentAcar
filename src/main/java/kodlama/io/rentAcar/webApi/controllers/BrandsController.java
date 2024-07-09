@@ -1,13 +1,14 @@
 package kodlama.io.rentAcar.webApi.controllers;
 import java.util.List;
 
-import kodlama.io.rentAcar.bussiness.requests.CreateBrandRequest;
-import kodlama.io.rentAcar.bussiness.responses.GetAllBrandsResponse;
+import jakarta.validation.Valid;
+import kodlama.io.rentAcar.bussiness.DTO.requests.CreateBrandRequest;
+import kodlama.io.rentAcar.bussiness.DTO.requests.UpdateBrandRequset;
+import kodlama.io.rentAcar.bussiness.DTO.responses.GetAllBrandsResponse;
+import kodlama.io.rentAcar.bussiness.DTO.responses.GetByIdResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import kodlama.io.rentAcar.bussiness.abstracts.BrandService;
 
 
@@ -23,14 +24,35 @@ public class BrandsController {
 		this.brandService = brandService;
 	}
 	
-	@GetMapping("/getall")
+	@GetMapping()
 	public List<GetAllBrandsResponse> getAll(){
 		return brandService.getAll();
 	}
 
-	@PostMapping("/add")
+	@GetMapping("/{id}")
+	public GetByIdResponse getById(@PathVariable int id){
+		return  brandService.getbyID(id);
+	}
+
+	@PostMapping()
+	@ResponseStatus(code = HttpStatus.CREATED)
 	public void add(CreateBrandRequest createBrandRequest){
 
 		this.brandService.add(createBrandRequest);
 	}
+
+	@PutMapping
+	public void  update(UpdateBrandRequset updateBrandRequset){
+
+		this.brandService.update(updateBrandRequset);
+	}
+
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable int id){
+		this.brandService.delete(id);
+	}
+
+
+
 }
+
